@@ -1,19 +1,25 @@
 const express = require('express');
-const path = require('path');
-const app = express();
-const randomWords = require('random-words');
+    path = require('path'),
+    app = express(),
+    bodyParser = require('body-parser'),
+    cors = require('cors'),
+    port = process.env.PORT || 3000;
 
-const port = process.env.PORT || 3000;
+const index = require('./routes/index'),
+    words = require('./routes/words');
 
-app.use(express.static(path.join(__dirname, 'dist/fast-type')))
+app.use(cors())
+app.use(express.static(path.join(__dirname, 'dist/fast-type')));
+app.use(bodyParser.urlencoded({extended:true}));
+app.use(bodyParser.json());
+
+
+app.use('/', index)
+app.use('/words', words)
 
 
 app.listen(port, () => {
     console.log(`listening on ports: ${port}`);
-    console.log('random', randomWords(700))
     
 })
 
-app.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, 'dist/fast-type/index.html'))
-})

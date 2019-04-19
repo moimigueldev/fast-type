@@ -11,13 +11,13 @@
   </div>
   <div class="row">
     <div class="col-md-12 mt-5">
-      <H2 class="text-center " style="color:white" id="word">{{word}}</H2>
+      <H2 class="text-center " style="color:white" id="word">{{word | uppercase}}</H2>
     </div>
   </div>
   <div class="row">
     <div class="col-md-12 mt-5">
-      <form (ngSubmit)="onNextWord()">
-        <input type="text" class="form-control text-center" autofocus placeholder="Start Typing...">
+      <form (ngSubmit)="onStartTyping(f)" #f="ngForm">
+        <input type="text" ngModel name="answer" class="form-control text-center" (ngModelChange)="onStartTyping(f)" autofocus placeholder="Start Typing...">
       </form>
     </div>
   </div>
