@@ -5,6 +5,7 @@ import { AppComponent } from './app.component';
 import {FormsModule} from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { WordsService } from './shared/words.service';
+import { LeaderBoardService} from './shared/leaderboard.service'
 
 
 @NgModule({
@@ -17,7 +18,7 @@ import { WordsService } from './shared/words.service';
     HttpModule
 
   ],
-  providers: [WordsService],
+  providers: [WordsService, LeaderBoardService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

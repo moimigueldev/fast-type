@@ -6,7 +6,8 @@ const express = require('express');
     port = process.env.PORT || 3000;
 
 const index = require('./routes/index'),
-    words = require('./routes/words');
+        words = require('./routes/words'),
+        leaderboard = require('./routes/leaderboard');
 
 app.use(cors())
 app.use(express.static(path.join(__dirname, 'dist/fast-type')));
@@ -14,8 +15,9 @@ app.use(bodyParser.urlencoded({extended:true}));
 app.use(bodyParser.json());
 
 
-app.use('/', index)
-app.use('/words', words)
+app.use('/', index);
+app.use('/words', words);
+app.use('/leaderboard', leaderboard)
 
 
 app.listen(port, () => {

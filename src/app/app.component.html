@@ -29,12 +29,71 @@
       <h4 class="text-center">Score: {{score}}</h4>
     </div>
   </div>
-  <div class="row mt-5">
+  <div class="row m-5">
     <div class="col-md-6 m-auto"  id='directions'>
           <h5 class="text-center" >Directions</h5>
           <p class="text-center">
             Type Each Word in under the given amount of time.To Play again type the current word and the score will reset
           </p>
+    
+    </div>
+  </div>
+  
+  <div class="row mt-5 text-center" *ngIf="leaderOne">
+    <div class="col-md-6 m-auto" >
+      <h5 class="text-center" style="font-family: 'Lilita One', cursive; color: white;" >LEADERBOARD</h5>
+
+      
+      <div class="row">
+        <div class="col-md-6">
+          <p class="leaderBoardPlayers"  style="color: #0bff03">#1   {{leaderOne.name}} </p>
+        </div>
+        <div class="col-md-6">
+          <p class="leaderBoardPlayers"  style="color: #0bff03"> {{leaderOne.score}}</p>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-6">
+          <p class="leaderBoardPlayers" style="color: #00c8ff">#2   {{leaderTwo.name}}</p>
+        </div>
+        <div class="col-md-6">
+          <p class="leaderBoardPlayers"  style="color: #00c8ff">{{leaderTwo.score}}</p>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-6">
+          <p class="leaderBoardPlayers" style="color: #a600ff">#3   {{leaderThree.name}}</p>
+        </div>
+        <div class="col-md-6">
+          <p class="leaderBoardPlayers"  style="color: #a600ff">{{leaderThree.score}}</p>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-6">
+          <p class="leaderBoardPlayers" style="color: #ffd500">#4   {{leaderFour.name}}</p>
+        </div>
+        <div class="col-md-6">
+          <p class="leaderBoardPlayers"  style="color: #ffd500">{{leaderFour.score}}</p>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6">
+          <p class="leaderBoardPlayers" style="color: #d079ff">#5   {{leaderFive.name}}</p>
+        </div>
+        <div class="col-md-6">
+          <p class="leaderBoardPlayers"  style="color: #d079ff">{{leaderFive.score}}</p>
+        </div>
+      </div>
+
+
+
+    
+      
+      
+      
     
     </div>
   </div>
