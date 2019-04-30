@@ -5,23 +5,23 @@ const express = require('express'),
     leaderBoard = [
         leaderOne=   {
             name: 'Ultimate Beast',
-            score: 10
+            score: 2
         },
         leaderTwo=  {
             name: 'Masked Titan',
-            score: 15
+            score: 9
         },
         leaderThree=  {
             name: 'Oranolio',
-            score: 20
+            score: 7
         },
         leaderFour=  {
             name: 'Popularkiya',
-            score: 30
+            score:1
         },
         leaderFive=  {
             name: 'Bootecia',
-            score: 40
+            score: 11
         },
     ];
 
@@ -33,6 +33,14 @@ router.get('/', (req, res) => {
     console.log('leaderboard url hit');
     
     res.send({leaderBoard})
+});
+
+router.put('/', (req, res) => {
+    const newLeaderboard = req.body.leaderBoard;
+    leaderBoard = newLeaderboard;
+
+    console.log('got the new leaderboard', leaderBoard);
+    res.send(leaderBoard)
 })
     
 

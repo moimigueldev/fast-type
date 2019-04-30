@@ -1,10 +1,8 @@
 import { Component, AfterViewInit, ElementRef, OnInit } from '@angular/core';
-import { Http } from '@angular/http';
 import { WordsService } from './shared/words.service';
 import { NgForm } from '@angular/forms';
 import * as Timeout from 'smart-timeout';
 import { LeaderBoardService } from './shared/leaderboard.service';
-import { promise } from 'protractor';
 import { LeaderBoardPlayer } from './shared/leaderboard.model';
 
 
@@ -17,6 +15,7 @@ import { LeaderBoardPlayer } from './shared/leaderboard.model';
 export class AppComponent implements AfterViewInit, OnInit {
 
 
+
   // LEADERBOARD
   leaderOne: LeaderBoardPlayer;
   leaderTwo: LeaderBoardPlayer;
@@ -24,9 +23,9 @@ export class AppComponent implements AfterViewInit, OnInit {
   leaderFour: LeaderBoardPlayer;
   leaderFive: LeaderBoardPlayer;
 
-  leaderBoard = [];
+  leaderBoard = []
 
-  word = 'Word'
+  word = ''
   secondsLeft = 5;
   score = 0;
   words: any;
@@ -34,7 +33,6 @@ export class AppComponent implements AfterViewInit, OnInit {
 
   constructor(
     private elementRef: ElementRef,
-    private http: Http,
     private wordsService: WordsService,
     private leaderBoardService: LeaderBoardService
     ){
@@ -61,29 +59,33 @@ export class AppComponent implements AfterViewInit, OnInit {
 
 
   this.leaderBoardService.getLeaderBoard().subscribe((res) => {
-           
-    const data = res.json().leaderBoard;
-
-    data.forEach(el => {
-         this.leaderBoard.push(new LeaderBoardPlayer(el.name, el.score))
-    });
-
-    console.log('LEADERBOARD', this.leaderBoard)
-
-    this.leaderOne = new LeaderBoardPlayer(this.leaderBoard[0].name, this.leaderBoard[0].score)
-    this.leaderTwo = new LeaderBoardPlayer(this.leaderBoard[1].name, this.leaderBoard[1].score)
-    this.leaderThree = new LeaderBoardPlayer(this.leaderBoard[2].name, this.leaderBoard[2].score)
-    this.leaderFour = new LeaderBoardPlayer(this.leaderBoard[3].name, this.leaderBoard[3].score)
-    this.leaderFive = new LeaderBoardPlayer(this.leaderBoard[4].name, this.leaderBoard[4].score)
-    
+   this.onSetLeaderBoard(res);    
  })
 
   
   
- }
+ } //end of 
 
   onNextWord() {
   this.word = this.words[Math.floor(Math.random()*this.words.length)];
+ }
+
+
+ onSetLeaderBoard(res) {
+      
+  const data = res.json().leaderBoard;
+  for (let index = 0; index < data.length; index++) {
+    this.leaderBoard.splice(index, 1, new LeaderBoardPlayer(data[index].name, data[index].score))
+  }
+
+  this.leaderBoard = this.leaderBoard.sort((a, b) => parseFloat(a.score) - parseFloat(b.score)).reverse();
+
+  this.leaderOne = new LeaderBoardPlayer(this.leaderBoard[0].name, this.leaderBoard[0].score)
+  this.leaderTwo = new LeaderBoardPlayer(this.leaderBoard[1].name, this.leaderBoard[1].score)
+  this.leaderThree = new LeaderBoardPlayer(this.leaderBoard[2].name, this.leaderBoard[2].score)
+  this.leaderFour = new LeaderBoardPlayer(this.leaderBoard[3].name, this.leaderBoard[3].score)
+  this.leaderFive = new LeaderBoardPlayer(this.leaderBoard[4].name, this.leaderBoard[4].score)
+
  }
 
   onStartTyping(form: NgForm)  {
@@ -103,7 +105,9 @@ export class AppComponent implements AfterViewInit, OnInit {
 
       Timeout.set('gameTimer',() =>{
         form.reset();
+        alert('ran out of time')
         this.timerStarted = false;
+        this.checkScore();
         this.score = 0;
         this.onStartTyping(form)
         
@@ -129,7 +133,47 @@ export class AppComponent implements AfterViewInit, OnInit {
  }
 
  
+checkScore() {
+  console.log('checking score', Math.max(this.score, this.leaderBoard[0].score))
 
+  for (let index = 0; index < this.leaderBoard.length; index++) {
+    
+  }
+
+
+
+
+    // for (let index = 0; index < this.leaderBoard.length; index++) {
+    //   console.log('cheking this person', this.leaderBoard[index])
+    //   if (this.score >= this.leaderBoard[index].score) {
+
+    //     const newPlayer = prompt(`You beat ${this.leaderBoard[index].name}! Please enter a name`)
+    //     this.leaderBoard.splice(index, 1, new LeaderBoardPlayer(newPlayer, this.score))
+
+        
+
+    //     this.leaderBoardService.onUpdateLeaderboard(this.leaderBoard).subscribe((response) => {
+     
+    //       const data = response.json();
+        
+    //         for (let index = 0; index < data.length; index++) {
+    //           this.leaderBoard.splice(index, 1, new LeaderBoardPlayer(data[index].name, data[index].score))
+
+    //         }
+    
+    //         this.ngOnInit();
+    //     })
+    //     break;
+
+    //  }
+
+   
+    // } 
+
+    
+
+  
+}//end of checkScore
 
 
 
