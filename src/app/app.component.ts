@@ -59,6 +59,7 @@ export class AppComponent implements AfterViewInit, OnInit {
 
 
   this.leaderBoardService.getLeaderBoard().subscribe((res) => {
+    console.log('the res', res.json())
    this.onSetLeaderBoard(res);    
  })
 
@@ -134,41 +135,39 @@ export class AppComponent implements AfterViewInit, OnInit {
 
  
 checkScore() {
-  console.log('checking score', Math.max(this.score, this.leaderBoard[0].score))
-
-  for (let index = 0; index < this.leaderBoard.length; index++) {
-    
-  }
+  
 
 
 
-
-    // for (let index = 0; index < this.leaderBoard.length; index++) {
-    //   console.log('cheking this person', this.leaderBoard[index])
-    //   if (this.score >= this.leaderBoard[index].score) {
-
-    //     const newPlayer = prompt(`You beat ${this.leaderBoard[index].name}! Please enter a name`)
-    //     this.leaderBoard.splice(index, 1, new LeaderBoardPlayer(newPlayer, this.score))
-
-        
-
-    //     this.leaderBoardService.onUpdateLeaderboard(this.leaderBoard).subscribe((response) => {
+    for (let index = 0; index < this.leaderBoard.length; index++) {
      
-    //       const data = response.json();
+      if (this.score >= this.leaderBoard[index].score) {
+
+        const newPlayer = prompt(`You beat ${this.leaderBoard[index].name}! Please enter a name`)
+        // this.leaderBoard.splice(index, 1, new LeaderBoardPlayer(newPlayer, this.score))
+        this.leaderBoard.push(new LeaderBoardPlayer(newPlayer, this.score))
+
+        this.leaderBoard = this.leaderBoard.sort((a, b) => parseFloat(a.score) - parseFloat(b.score)).reverse();
+
+        this.leaderBoard.splice(-1,1)
+       
+        this.leaderBoardService.onUpdateLeaderboard(this.leaderBoard).subscribe((response) => {
+     
+          const data = response.json();
         
-    //         for (let index = 0; index < data.length; index++) {
-    //           this.leaderBoard.splice(index, 1, new LeaderBoardPlayer(data[index].name, data[index].score))
+            for (let index = 0; index < data.length; index++) {
+              this.leaderBoard.splice(index, 1, new LeaderBoardPlayer(data[index].name, data[index].score))
 
-    //         }
+            }
     
-    //         this.ngOnInit();
-    //     })
-    //     break;
+            this.ngOnInit();
+        })
+        break;
 
-    //  }
+     }
 
    
-    // } 
+    } 
 
     
 
