@@ -1,7 +1,9 @@
 const express = require('express'),
     router = express.Router(),
     path = require('path'),
-    randomWords = require('random-words');
+    randomWords = require('random-words'),
+    visitCounter = require('express-visit-counter').Loader;
+
 
 
 const words = randomWords(500);
@@ -9,9 +11,10 @@ const words = randomWords(500);
 
 
 
-router.get('/', (req, res) => {
-    console.log('words url hit');
-    // res.setHeader('Access-Control-Allow-Origin', 'http://localhost:4200');
+router.get('/', async (req, res) => {
+    let visitorsAltogether =  await visitCounter.getCount("/words");
+
+    console.log('bisitoraltogher', visitorsAltogether)
     res.send({words});
 })
     

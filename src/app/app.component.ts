@@ -4,7 +4,7 @@ import { NgForm } from '@angular/forms';
 import * as Timeout from 'smart-timeout';
 import { LeaderBoardService } from './shared/leaderboard.service';
 import { LeaderBoardPlayer } from './shared/leaderboard.model';
-
+import Swal from 'sweetalert2'
 
 
 @Component({
@@ -25,6 +25,7 @@ export class AppComponent implements AfterViewInit, OnInit {
 
   leaderBoard = []
 
+  newUser: string;
   word = ''
   secondsLeft = 5;
   score = 0;
@@ -59,7 +60,6 @@ export class AppComponent implements AfterViewInit, OnInit {
 
 
   this.leaderBoardService.getLeaderBoard().subscribe((res) => {
-    console.log('the res', res.json())
    this.onSetLeaderBoard(res);    
  })
 
@@ -105,8 +105,9 @@ export class AppComponent implements AfterViewInit, OnInit {
       this.timerStarted = true;
 
       Timeout.set('gameTimer',() =>{
+        
         form.reset();
-        alert('ran out of time')
+        alert('RAN OUT OF TIME')
         this.timerStarted = false;
         this.checkScore();
         this.score = 0;
@@ -141,7 +142,8 @@ checkScore() {
 
     for (let index = 0; index < this.leaderBoard.length; index++) {
      
-      if (this.score >= this.leaderBoard[index].score) {
+      if (this.score > this.leaderBoard[index].score) {
+        
 
         const newPlayer = prompt(`You beat ${this.leaderBoard[index].name}! Please enter a name`)
         // this.leaderBoard.splice(index, 1, new LeaderBoardPlayer(newPlayer, this.score))
@@ -164,14 +166,13 @@ checkScore() {
         })
         break;
 
+     } else {
+      
      }
 
    
     } 
 
-    
-
-  
 }//end of checkScore
 
 
