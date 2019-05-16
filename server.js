@@ -1,10 +1,12 @@
+require('dotenv').config()
 const express = require('express');
     path = require('path'),
     app = express(),
     bodyParser = require('body-parser'),
     cors = require('cors'),
     port = process.env.PORT || 3000,
-    visitCounter = require('express-visit-counter');
+    visitCounter = require('express-visit-counter'), 
+    cron = require('cron');
 
 
     app.use(visitCounter.initialize());
@@ -30,5 +32,14 @@ app.use('/leaderboard', leaderboard)
 app.listen(port, () => {
     console.log(`listening on ports: ${port}`);
     
-})
+});
+
+
+
+
+const cronJob = cron.job('* * * * * *', async function(){
+    // perform operation e.g. GET request http.get() etc.
+   
+    
+}); 
 
