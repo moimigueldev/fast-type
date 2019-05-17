@@ -19,8 +19,6 @@ export class LeaderBoardService {
    
 
     getLeaderBoard() {
-        console.log('activating get leaderboard')
-
         const headers = new Headers({
             'Content-Type': 'application/json',
             'Access-Control-Allow-Origin': '*'
