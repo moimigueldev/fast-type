@@ -20,7 +20,7 @@ export class WordsService {
         })
         
 
-        return this.http.get('http://localhost:3000/words', {headers:headers});
+        return this.http.get('https://fasttype.herokuapp.com/words', {headers:headers});
     }
 
     randomWordSelector() {

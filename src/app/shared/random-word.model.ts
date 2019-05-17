@@ -12,7 +12,7 @@ export class randomWordGenerator {
     }
 
     getWords() {
-        return this.http.get('http://localhost:3000/words').subscribe((res: Response) => {
+        return this.http.get('https://fasttype.herokuapp.com/words').subscribe((res: Response) => {
             console.log('response', res)
         })
     }

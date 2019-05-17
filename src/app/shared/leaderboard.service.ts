@@ -25,7 +25,7 @@ export class LeaderBoardService {
             'Content-Type': 'application/json',
             'Access-Control-Allow-Origin': '*'
         })  
-        return this.http.get('http://localhost:3000/leaderboard', {headers:headers});
+        return this.http.get('https://fasttype.herokuapp.com/leaderboard', {headers:headers});
     }
 
     onUpdateLeaderboard(leaderBoard: LeaderBoardPlayer[]) {
@@ -35,7 +35,7 @@ export class LeaderBoardService {
             'Access-Control-Allow-Origin': '*'
         });
 
-        return this.http.put('http://localhost:3000/leaderboard', {leaderBoard}, {headers:headers});
+        return this.http.put('https://fasttype.herokuapp.com/leaderboard', {leaderBoard}, {headers:headers});
         
     }
 
