@@ -5,6 +5,8 @@ import * as Timeout from 'smart-timeout';
 import { LeaderBoardService } from './shared/leaderboard.service';
 import { LeaderBoardPlayer } from './shared/leaderboard.model';
 import Swal from 'sweetalert2'
+import * as randomword from 'random-words'
+import { Subscription } from 'rxjs';
 
 
 @Component({
@@ -15,6 +17,8 @@ import Swal from 'sweetalert2'
 export class AppComponent implements AfterViewInit, OnInit {
 
 
+  //subscriptions
+  leaderBoardSubscription: Subscription;
 
   // LEADERBOARD
   leaderOne: LeaderBoardPlayer;
@@ -29,7 +33,7 @@ export class AppComponent implements AfterViewInit, OnInit {
   word = ''
   secondsLeft = 5;
   score = 0;
-  words: any;
+  words = randomword(500);
   timerStarted = false;
 
   constructor(
@@ -50,17 +54,18 @@ export class AppComponent implements AfterViewInit, OnInit {
   ngOnInit() {
 
 
-    this.leaderBoardService.getLeaderBoard().subscribe(players => {
 
-      // console.log('players', players)
+    this.leaderBoardSubscription = this.leaderBoardService.getLeaderBoard().subscribe(players => {
       this.onSetLeaderBoard(players);
     })
+
+    this.onNextWord()
 
     // this.wordsService.getWords().subscribe((res) => {
 
     //   const data = res.json().words;
     //   this.words = data;
-    //   this.onNextWord()
+    //   
 
     // });
 
@@ -83,21 +88,10 @@ export class AppComponent implements AfterViewInit, OnInit {
 
     // const data = res.json().leaderBoard;
     let data = res.leaderboard;
-    console.log('res', data)
     this.leaderBoard = data.sort(function (a, b) {
       return b.score - a.score;
     });
-    console.log('data', data)
 
-
-    // data.forEach(pl => {
-    //   console.log('players', pl)
-    // });
-    // for (let index = 0; index < data.length; index++) {
-    //   this.leaderBoard.splice(index, 1, new LeaderBoardPlayer(data[index].name, data[index].score))
-    // }
-
-    // this.leaderBoard = this.leaderBoard.sort((a, b) => parseFloat(a.score) - parseFloat(b.score)).reverse();
 
     this.leaderOne = new LeaderBoardPlayer(this.leaderBoard[0].name, this.leaderBoard[0].score)
     this.leaderTwo = new LeaderBoardPlayer(this.leaderBoard[1].name, this.leaderBoard[1].score)
@@ -163,29 +157,19 @@ export class AppComponent implements AfterViewInit, OnInit {
       if (this.score > this.leaderBoard[index].score) {
 
 
-        const newPlayer = prompt(`You beat ${this.leaderBoard[index].name}! Please enter a name`)
+        const newPlayer = prompt(`You beat ${this.leaderBoard[index].name}! Please enter a name:`)
         // this.leaderBoard.splice(index, 1, new LeaderBoardPlayer(newPlayer, this.score))
-        this.leaderBoard.push(new LeaderBoardPlayer(newPlayer, this.score))
+        this.leaderBoard.push({ name: newPlayer, score: this.score })
 
         this.leaderBoard = this.leaderBoard.sort((a, b) => parseFloat(a.score) - parseFloat(b.score)).reverse();
 
         this.leaderBoard.splice(-1, 1)
+        console.log('new leaderboard', this.leaderBoard)
 
-        this.leaderBoardService.onUpdateLeaderboard(this.leaderBoard).subscribe((response) => {
-
-          const data = response.json();
-
-          for (let index = 0; index < data.length; index++) {
-            this.leaderBoard.splice(index, 1, new LeaderBoardPlayer(data[index].name, data[index].score))
-
-          }
-
-          this.ngOnInit();
-        })
-        break;
+        this.leaderBoardService.onUpdateLeaderboard(this.leaderBoard)
 
       } else {
-
+        console.log('nope')
       }
 
 
@@ -193,6 +177,8 @@ export class AppComponent implements AfterViewInit, OnInit {
 
   }//end of checkScore
 
-
+  onOnDestroy() {
+    this.leaderBoardSubscription ? this.leaderBoardSubscription.unsubscribe() : null;
+  }
 
 }

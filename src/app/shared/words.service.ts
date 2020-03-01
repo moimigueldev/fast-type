@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Http, Response, Headers } from '@angular/http';
-
+import * as randomword from 'random-words'
 
 
 @Injectable()
@@ -10,11 +10,12 @@ export class WordsService {
 
 
     constructor(private http: Http) {
+
     }
 
     getWords() {
 
-        console.log('getting words')
+
 
         // const headers = new Headers({
         //     'Content-Type': 'application/json',

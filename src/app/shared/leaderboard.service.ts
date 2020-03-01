@@ -18,39 +18,21 @@ export class LeaderBoardService {
         public afs: AngularFirestore,
 
     ) {
-        console.log('on init')
+
         this.leaderBoard = this.afs.doc('leaderboard/leaders').valueChanges()
     }
 
 
     getLeaderBoard() {
-        // this.leaderBoard = this.afs.doc('leaderboard/leaders').valueChanges().subscribe(el => console.log('el', el))
-
         return this.leaderBoard
     }
 
-    // getLeaderBoard() {
-    //     const headers = new Headers({
-    //         'Content-Type': 'application/json',
-    //         'Access-Control-Allow-Origin': '*'
-    //     })
-    //     return this.http.get('http://localhost:3000/leaderboard', { headers: headers });
-    // }
 
-    onUpdateLeaderboard(leaderBoard: LeaderBoardPlayer[]) {
+    onUpdateLeaderboard(newLeaderBoard) {
+        // console.log('on update', leaderBoard)
 
-        const headers = new Headers({
-            'Content-Type': 'application/json',
-            'Access-Control-Allow-Origin': '*'
-        });
-
-        return this.http.put('http://localhost:3000/leaderboard', { leaderBoard }, { headers: headers });
-
+        this.afs.doc('leaderboard/leaders').set({
+            leaderboard: newLeaderBoard
+        })
     }
-
-
-
-
-
-
 }
