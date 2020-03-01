@@ -49,4 +49,4 @@ Thumbs.db
 
 # Assets 
 src/assets/keys.ts
-.Firebase/
+.firebase/
