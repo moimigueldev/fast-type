@@ -158,20 +158,19 @@ export class AppComponent implements AfterViewInit, OnInit {
 
 
         const newPlayer = prompt(`You beat ${this.leaderBoard[index].name}! Please enter a name:`)
-        // this.leaderBoard.splice(index, 1, new LeaderBoardPlayer(newPlayer, this.score))
+
         this.leaderBoard.push({ name: newPlayer, score: this.score })
 
         this.leaderBoard = this.leaderBoard.sort((a, b) => parseFloat(a.score) - parseFloat(b.score)).reverse();
 
+
         this.leaderBoard.splice(-1, 1)
-        console.log('new leaderboard', this.leaderBoard)
+
 
         this.leaderBoardService.onUpdateLeaderboard(this.leaderBoard)
+        break
 
-      } else {
-        console.log('nope')
       }
-
 
     }
 
