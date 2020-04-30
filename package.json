@@ -33,7 +33,7 @@
     "express": "^4.16.4",
     "express-visit-counter": "^1.0.0",
     "firebase": "^7.9.3",
-    "jquery": "^3.4.1",
+    "jquery": "^3.5.0",
     "moment": "^2.24.0",
     "mongodb": "^3.2.3",
     "mongoose": "^5.5.5",
