@@ -34,7 +34,7 @@
     "express-visit-counter": "^1.0.0",
     "firebase": "^7.9.3",
     "jquery": "^3.4.1",
-    "moment": "^2.24.0",
+    "moment": "^2.29.4",
     "mongodb": "^3.2.3",
     "mongoose": "^5.5.5",
     "nodemailer": "^6.1.1",
